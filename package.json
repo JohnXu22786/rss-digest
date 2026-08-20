@@ -15,6 +15,14 @@
     "briefing"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnXu22786/rss-digest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JohnXu22786/rss-digest/issues"
+  },
+  "homepage": "https://github.com/JohnXu22786/rss-digest#readme",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
