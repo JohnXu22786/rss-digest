@@ -55,3 +55,17 @@ test('findDuplicate matches exactly and near-equivalently', () => {
   )
   assert.equal(distinct, undefined)
 })
+test('findDuplicate respects the similarity threshold boundary', () => {
+  const known = [{ title: 'Hello world foo', hash: hashText('t:hello world foo') }]
+  const options = { threshold: 0.9, compareContent: false }
+  const exact = findDuplicate({ title: 'Hello world foo', hash: hashText('t:different') }, known, options)
+  assert.ok(exact !== undefined)
+  const below = findDuplicate({ title: 'Hello world bar', hash: hashText('t:different') }, known, options)
+  assert.equal(below, undefined)
+})
+
+test('similarity edge inputs: empty text and single tokens', () => {
+  assert.equal(tokenSimilarity('', ''), 0)
+  assert.equal(tokenSimilarity('', 'anything'), 0)
+  assert.equal(tokenSimilarity('a', 'a'), 1)
+})
