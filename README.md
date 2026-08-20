@@ -215,6 +215,27 @@ src/
 The core (`service.ts` and below) has **zero** runtime dependencies; only the
 dsh layer imports `@deepseek-ai/*` packages.
 
+## FAQ
+
+- **The package manager warns that dsh peer dependencies are not satisfied.**
+  The dsh profile already ships `@deepseek-ai/cordis`, `@deepseek-ai/dsh-tools`,
+  `@deepseek-ai/dsh-llm`, and `@deepseek-ai/cordis-plugin-timer`; the profile
+  linker wires them in. If a strict manager still complains, run
+  `pnpm --dir $DSH_HOME/profiles/<name> add @deepseek-ai/cordis @deepseek-ai/dsh-tools @deepseek-ai/dsh-llm @deepseek-ai/cordis-plugin-timer`.
+
+- **Digests fire at the wrong wall-clock time.** Timezones are only honored
+  when `digest.timezone` is set to an IANA zone (e.g. `Asia/Shanghai`); an
+  empty value uses the host's local time.
+
+- **I only get extractive summaries, not LLM ones.** Without a reachable model
+  route the plugin degrades deterministically to extractive summaries. Check
+  `summary.provider` / `summary.model` and, for the CLI, that `DEEPSEEK_API_KEY`
+  is set and the endpoint is reachable.
+
+- **Where is my data?** The store resolves to (in order) an explicit
+  `config.dataPath`, `$DSH_RSS_DIGEST_DATA`, `$DSH_HOME/data/rss-digest/store.json`,
+  or `<cwd>/.dsh-rss-digest/store.json`.
+
 ## Development
 
 ```bash
