@@ -1,0 +1,49 @@
+# Example profile-layer patch for dsh-rss-digest.
+#
+# Copy the sections you need into your profile's own
+# `$DSH_HOME/profiles/<name>/cordis.patch.yml`. A profile patch is a YAML
+# list applied AFTER every bundle layer; a bare row targeting the plugin's
+# row id replaces that row's whole `config` (defaults still apply for every
+# field you omit).
+
+# Tune the plugin by id:
+- id: rss-digest
+  config:
+    dataPath: ''                      # '' = $DSH_HOME/data/rss-digest/store.json
+    sources:                          # optional initial subscriptions
+      - url: https://hnrss.org/frontpage
+        title: Hacker News
+      - url: https://www.ruanyifeng.com/blog/atom.xml
+        title: 阮一峰的网络日志
+        enabled: false                # subscribed but not polled yet
+    fetch:
+      enabled: true
+      intervalMinutes: 60             # poll every hour (min 5)
+      onStartup: true                 # one cycle shortly after boot
+      requestTimeoutMs: 15000
+      sizeLimitBytes: 1048576         # 1 MiB per document
+      retries: 2
+      maxItemsPerSource: 50
+      storeContentChars: 4000
+      maxStoredItems: 1000
+    summary:
+      enabled: true                   # false forces extractive summaries
+      mode: batch                     # batch = one model call per digest
+      language: zh                    # zh | en
+      maxLength: 800                  # character cap on the summary body
+      maxTokens: 1024
+      provider: ''                    # '' = first registered dsh provider
+      model: ''                       # '' = first listed model of the provider
+    dedupe:
+      threshold: 0.9                  # token-set Jaccard similarity
+      compareContent: false
+    digest:
+      enabled: true
+      time: '08:30'                   # daily wall-clock time (HH:MM)
+      timezone: Asia/Shanghai         # '' = host local time
+      maxItems: 20
+      deliverTo: both                 # agents | file | both
+      includeItemLinks: true
+
+# The store path may also be forced through the environment
+# (DSH_RSS_DIGEST_DATA) or by setting `dataPath` above.

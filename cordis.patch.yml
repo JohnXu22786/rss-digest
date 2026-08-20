@@ -1,0 +1,14 @@
+# dsh-rss-digest bundle patch.
+#
+# A bundle is a configuration layer: this file inserts one plugin row. The
+# row id is how later layers (the profile's own cordis.patch.yml or a
+# `--patch` overlay) override this plugin's configuration; see examples/
+# profile.cordis.patch.yml for a full configuration example.
+#
+# Rows are identified by `id`; `name` is the module specifier that resolves
+# to the plugin entry (here: the package's own `main`, which exports
+# name/inject/Config/apply).
+
+- insert:
+    - id: rss-digest
+      name: 'dsh-rss-digest'
