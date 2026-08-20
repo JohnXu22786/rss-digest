@@ -16,6 +16,14 @@ test('parseClockTime accepts and rejects clock strings', () => {
   assert.equal(parseClockTime('noon'), undefined)
 })
 
+test('parseClockTime accepts midnight and single-digit hours', () => {
+  assert.deepEqual(parseClockTime('00:00'), { hour: 0, minute: 0 })
+  assert.deepEqual(parseClockTime('0:00'), { hour: 0, minute: 0 })
+  assert.deepEqual(parseClockTime('7:05'), { hour: 7, minute: 5 })
+  assert.equal(parseClockTime('7:5'), undefined)
+  assert.equal(parseClockTime(''), undefined)
+})
+
 test('nextZonedOccurrence returns today when the time is still ahead', () => {
   const result = nextZonedOccurrence('08:00', 'Asia/Shanghai', new Date('2026-08-16T20:00:00Z'))
   assert.equal(result.next.toISOString(), '2026-08-17T00:00:00.000Z')
