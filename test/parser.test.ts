@@ -119,3 +119,29 @@ test('self-closing tags and comments do not corrupt parsing', () => {
   assert.equal(feed.items.length, 1)
   assert.equal(feed.items[0]!.link, '')
 })
+
+test('whitespace and newlines in titles are trimmed', () => {
+  const xml = `<rss version="2.0"><channel>
+    <title>
+      Padded feed title
+    </title>
+    <item>
+      <title>  Leading and trailing  </title>
+      <link>https://example.com/trim</link>
+      <pubDate>Mon, 17 Aug 2026 08:00:00 GMT</pubDate>
+    </item>
+  </channel></rss>`
+  const feed = parseFeedDocument(xml)
+  assert.equal(feed.title, 'Padded feed title')
+  assert.equal(feed.items[0]!.title, 'Leading and trailing')
+})
+
+test('items with only a link survive, fully empty items are dropped', () => {
+  const xml = `<rss version="2.0"><channel><title>Mixed</title>
+    <item><title>Keep me</title><link>https://example.com/keep</link></item>
+    <item><!-- only whitespace + comments, no content --></item>
+  </channel></rss>`
+  const feed = parseFeedDocument(xml)
+  assert.equal(feed.items.length, 1)
+  assert.equal(feed.items[0]!.title, 'Keep me')
+})
