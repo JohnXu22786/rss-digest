@@ -1,5 +1,7 @@
 ﻿# dsh-rss-digest
 
+**English · [简体中文](README.zh.md)**
+
 RSS/Atom aggregation, smart summarization, and daily Markdown briefings — a
 first-party-style **dsh bundle** (DeepSeek Harness, "everything is a plugin").
 

@@ -1,5 +1,7 @@
 ﻿# dsh-rss-digest
 
+**[English](README.md) · 简体中文**
+
 RSS/Atom 订阅聚合、智能摘要与每日 Markdown 简报 —— 一个原生的 **dsh bundle**（DeepSeek Harness，「一切皆是插件」）。
 
 插件负责订阅源管理（本地持久化）、定时抓取、标题/内容相似去重、调用 harness 的 LLM 生成中英文简报摘要（模型不可用时自动降级为原文摘要），并将每日简报投递到实时会话和/或本地文件。同时附带一个共享同一套核心的独立 CLI。
